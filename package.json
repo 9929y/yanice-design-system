@@ -1,0 +1,38 @@
+{
+  "name": "yanice-design-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Design system for yaniceyang.com — light neutral, two material tiers (Flat surfaces + one Glass nav).",
+  "type": "module",
+  "main": "./dist/yanice-ds.js",
+  "module": "./dist/yanice-ds.js",
+  "types": "./dist/index.d.ts",
+  "style": "./dist/yanice-ds.css",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/yanice-ds.js"
+    },
+    "./styles.css": "./dist/yanice-ds.css"
+  },
+  "files": ["dist"],
+  "sideEffects": ["*.css"],
+  "scripts": {
+    "build": "tsc --emitDeclarationOnly --outDir dist && vite build",
+    "typecheck": "tsc --noEmit",
+    "dev": "vite build --watch"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7"
+  }
+}

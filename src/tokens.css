@@ -1,0 +1,90 @@
+/* ============================================================
+   yanice-design-system · tokens
+   Source of truth: AI_materials_library/01_projects/portfolio_ux/05_design_system.md
+   Every value here is either decided by Yanice or measured from a reference site.
+   ============================================================ */
+
+:root {
+  /* ── Type ────────────────────────────────────────────────────
+     Inter (measured: deck.gallery uses Inter).
+     Shape of the scale comes from a pattern shared by ALL reference
+     sites: dense small text + one huge display size, with 20–48px
+     deliberately thin. 24/32 were added back as the minimum usable
+     middle. Inter runs wider than SF Pro, so display sizes take extra
+     negative tracking and body takes 0.03 less line-height. */
+  --ds-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --ds-t-xs: 10px;   /* labels, superscript */
+  --ds-t-sm: 12px;   /* meta, secondary — highest volume */
+  --ds-t-base: 14px; /* body */
+  --ds-t-md: 16px;   /* emphasised body */
+  --ds-t-lg: 24px;   /* card title */
+  --ds-t-xl: 32px;   /* section title */
+  --ds-t-display: clamp(64px, 9vw, 128px); /* once per screen, max */
+
+  --ds-lh-tight: 1.2;
+  --ds-lh-body: 1.44;
+  --ds-lh-display: 1;
+
+  --ds-tr-sm: 0;
+  --ds-tr-lg: -0.01em;
+  --ds-tr-display: -0.03em;
+
+  --ds-fw-regular: 400;
+  --ds-fw-medium: 500;
+
+  /* ── Neutrals (light) ─────────────────────────────────────── */
+  --ds-bg: #faf9f7;       /* page — never pure white */
+  --ds-surface: #ffffff;  /* card face — lighter than page, this is how light mode layers */
+  --ds-hairline: #e8e5e0; /* 1px rule — the only card boundary */
+  --ds-dim: #78716c;      /* muted text. 4.71:1 on glass — this is its LOWER bound */
+  --ds-fg: #1a1917;       /* primary text — never pure black */
+
+  /* ── Accent ───────────────────────────────────────────────────
+     Cyan/teal family, following Xiangyi — but lightness is inverted.
+     Xiangyi's rgb(0,255,247) glows on near-black; on this page it is
+     1.20:1 and invisible. #0d7d74 is the lightest teal that still
+     clears AA body text (4.75:1).
+     USAGE RULE: once per site, as a 999px dot. Not in nav, not on
+     hover, not on focus. */
+  --ds-accent: #0d7d74;
+
+  /* ── Shape ────────────────────────────────────────────────────
+     Only three radius grammars. Every reference site shares
+     "card + pill"; the small one is for inline elements. */
+  --ds-r-card: 12px;
+  --ds-r-pill: 999px;
+  --ds-r-sm: 8px;
+
+  /* ── Space (8px base) ─────────────────────────────────────── */
+  --ds-sp-xxs: 4px;
+  --ds-sp-xs: 8px;
+  --ds-sp-sm: 12px;
+  --ds-sp-md: 16px;
+  --ds-sp-lg: 24px;
+  --ds-sp-xl: 32px;
+  --ds-sp-xxl: 48px;
+
+  --ds-gap: 12px;       /* between cells */
+  --ds-pad-card: 32px;  /* inside a cell — fewer, larger cells means each needs air */
+
+  /* ── Motion ───────────────────────────────────────────────────
+     Durations/easings are DERIVED, not yet confirmed against
+     aristidebenoist.com (the primary motion reference, which reads
+     slower and never bounces). */
+  --ds-d-instant: 120ms;
+  --ds-d-quick: 240ms;
+  --ds-d-base: 480ms;
+  --ds-d-slow: 720ms;
+
+  --ds-e-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ds-e-in: cubic-bezier(0.64, 0, 0.78, 0);
+  --ds-e-both: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ── Light source ─────────────────────────────────────────────
+     ONE assumption for the whole system: light from above-left.
+     Glass top edge is dark (occluding), bottom edge is bright
+     (transmitting); tilted elements shade toward lower-right.
+     Break this in one place and every 3D read collapses. */
+  --ds-light-origin: top left;
+}

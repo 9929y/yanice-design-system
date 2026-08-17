@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# design-sync working dirs (config/NOTES/conventions in .design-sync ARE committed)
+.ds-sync/
+ds-bundle/
+.sync-diff.json
+.ds-build-meta.json

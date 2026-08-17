@@ -1,0 +1,251 @@
+@import './tokens.css';
+
+/* ============================================================
+   TWO MATERIAL TIERS. There is no third.
+   Every element is either a Flat surface or the one Glass nav.
+   The system defines NO elevation shadow.
+   ============================================================ */
+
+/* Border-box everywhere. Without this, the nav's measured geometry
+   (240×40 = padding + tab + gap + tab + padding) does not hold. */
+.ds-root,
+.ds-root *,
+.ds-root *::before,
+.ds-root *::after,
+.ds-nav,
+.ds-nav *,
+.ds-surface,
+.ds-card,
+.ds-pill { box-sizing: border-box; }
+
+.ds-root {
+  background: var(--ds-bg);
+  color: var(--ds-fg);
+  font-family: var(--ds-font);
+  font-size: var(--ds-t-base);
+  line-height: var(--ds-lh-body);
+  font-weight: var(--ds-fw-regular);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Tier 1 · Flat ──────────────────────────────────────────
+   Layering comes from surface colour + a 1px hairline. No shadow. */
+.ds-surface {
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-card);
+  box-shadow: none;
+}
+
+/* ── Tier 2 · Glass — the floating nav ONLY ──────────────────
+   Light-mode polarity is inverted from the dark original: light comes
+   from above, so the top edge occludes (dark) and the bottom edge
+   transmits (bright). Six layers, reduced from the measured ten.
+   The two filter lines are what make it glass — saturate() is not
+   optional, it is what makes transmitted colour feel alive.
+   There is no border: the edge is drawn entirely by inset shadows,
+   which is why it reads as a thick transparent body rather than a
+   translucent rectangle. */
+.ds-glass {
+  backdrop-filter: blur(8px) saturate(1.5);
+  -webkit-backdrop-filter: blur(8px) saturate(1.5);
+  background: rgba(255, 255, 255, 0.55);
+  border: 0;
+  border-radius: var(--ds-r-pill);
+  box-shadow:
+    /* 1 · hairline inset ring — defines the edge */
+    rgba(0, 0, 0, 0.06) 0 0 0 1px inset,
+    /* 2,3 · top edge dark (occluding) */
+    rgba(0, 0, 0, 0.10) 0 2px 3px -2px inset,
+    rgba(0, 0, 0, 0.06) -1px -1px 0 -1px inset,
+    /* 4 · bottom edge bright (transmitting) — the key layer on light */
+    rgba(255, 255, 255, 0.95) 0 -3px 4px -3px inset,
+    /* 5,6 · outer lift — softer and wider than on dark */
+    rgba(0, 0, 0, 0.05) 0 1px 4px 0,
+    rgba(0, 0, 0, 0.07) 0 6px 20px -4px;
+}
+
+/* ── Nav ─────────────────────────────────────────────────────
+   Geometry measured from xiangyidesign.com and fully self-consistent:
+     240 = 8 + 108 + 8(gap) + 108 + 8
+      40 = 8 + 24 + 8
+   The selected tab changes TEXT COLOUR ONLY — no sliding pill, no
+   fill, no shadow, no weight change. The glass container is the only
+   solid thing; the tabs are just text inside it. */
+.ds-nav {
+  position: fixed;
+  bottom: var(--ds-sp-xs);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-sp-xs);
+}
+
+.ds-nav__group {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-sp-xs);
+  padding: var(--ds-sp-xs);
+  height: 40px;
+}
+
+.ds-nav__tab {
+  width: 108px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  background: transparent; /* stays transparent even when selected */
+  border: 0;
+  border-radius: var(--ds-r-pill);
+  font: inherit;
+  font-size: var(--ds-t-sm);
+  font-weight: var(--ds-fw-regular); /* selected does not embolden */
+  color: var(--ds-dim);
+  cursor: pointer;
+  transition: color var(--ds-d-quick) var(--ds-e-out);
+}
+.ds-nav__tab[aria-current='page'] { color: var(--ds-fg); }
+.ds-nav__tab:active { transform: scale(0.95); }
+.ds-nav__tab:focus-visible {
+  outline: 2px solid var(--ds-fg);
+  outline-offset: 2px;
+}
+
+.ds-nav__trailing {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-sp-xs);
+  padding: var(--ds-sp-xs);
+  height: 40px;
+}
+
+/* ── Card ────────────────────────────────────────────────────
+   1:1 at rest. On hover/focus it rotates about the vertical axis;
+   projected width = w · cos(theta), so 60deg gives exactly 1:2.
+   A tilted card overhangs its cell — grids must leave slack. */
+.ds-card-stage { perspective: 1200px; }
+
+.ds-card {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  overflow: hidden;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-card);
+  box-shadow: none;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transition: transform var(--ds-d-base) var(--ds-e-out);
+  cursor: pointer;
+}
+.ds-card:hover,
+.ds-card:focus-visible { transform: rotateY(var(--ds-card-tilt, -60deg)); }
+.ds-card:focus-visible {
+  outline: 2px solid var(--ds-fg);
+  outline-offset: 2px;
+}
+.ds-card__media {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--ds-bg);
+  color: var(--ds-dim);
+  font-size: var(--ds-t-sm);
+}
+.ds-card__caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--ds-sp-sm);
+  margin-top: var(--ds-sp-sm);
+  font-size: var(--ds-t-sm);
+}
+.ds-card__title { color: var(--ds-fg); }
+.ds-card__meta { color: var(--ds-dim); text-align: right; }
+
+/* ── Pill ────────────────────────────────────────────────────
+   Transparent fill + 1px hairline, measured from Xiangyi's skill tags. */
+.ds-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-sp-xxs);
+  height: 21px;
+  padding: 0 7px;
+  background: transparent;
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-pill);
+  color: var(--ds-dim);
+  font-size: var(--ds-t-xs);
+  white-space: nowrap;
+}
+.ds-pill--selected {
+  border-color: var(--ds-fg);
+  color: var(--ds-fg);
+}
+
+/* ── Accent dot ──────────────────────────────────────────────
+   The site's ONE saturated mark. */
+.ds-accent-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--ds-r-pill);
+  background: var(--ds-accent);
+  flex: none;
+}
+
+/* ── Bento ───────────────────────────────────────────────────
+   Column count is intentionally a prop: the Dashboard cell inventory
+   is still open, and column count follows from it. */
+.ds-bento {
+  display: grid;
+  gap: var(--ds-gap);
+  grid-template-columns: repeat(var(--ds-bento-cols, 4), minmax(0, 1fr));
+}
+.ds-bento__cell {
+  padding: var(--ds-pad-card);
+  grid-column: span var(--ds-cell-w, 1);
+  grid-row: span var(--ds-cell-h, 1);
+  min-width: 0;
+}
+
+/* ── Text ────────────────────────────────────────────────────── */
+.ds-text { margin: 0; }
+.ds-text--xs { font-size: var(--ds-t-xs); line-height: var(--ds-lh-tight); }
+.ds-text--sm { font-size: var(--ds-t-sm); line-height: var(--ds-lh-tight); }
+.ds-text--base { font-size: var(--ds-t-base); line-height: var(--ds-lh-body); }
+.ds-text--md { font-size: var(--ds-t-md); line-height: var(--ds-lh-body); }
+.ds-text--lg {
+  font-size: var(--ds-t-lg);
+  line-height: var(--ds-lh-tight);
+  letter-spacing: var(--ds-tr-lg);
+}
+.ds-text--xl {
+  font-size: var(--ds-t-xl);
+  line-height: var(--ds-lh-tight);
+  letter-spacing: var(--ds-tr-lg);
+}
+.ds-text--display {
+  font-size: var(--ds-t-display);
+  line-height: var(--ds-lh-display);
+  letter-spacing: var(--ds-tr-display);
+}
+.ds-text--fg { color: var(--ds-fg); }
+.ds-text--dim { color: var(--ds-dim); }
+.ds-text--accent { color: var(--ds-accent); }
+.ds-text--regular { font-weight: var(--ds-fw-regular); }
+.ds-text--medium { font-weight: var(--ds-fw-medium); }
+
+/* ── Accessibility ───────────────────────────────────────────
+   Not optional. A 3D tilt is a real trigger for vestibular disorders. */
+@media (prefers-reduced-motion: reduce) {
+  .ds-card,
+  .ds-nav__tab { transition: none; }
+  .ds-card:hover,
+  .ds-card:focus-visible { transform: none; }
+  .ds-nav__tab:active { transform: none; }
+}
