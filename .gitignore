@@ -8,3 +8,7 @@ dist/
 ds-bundle/
 .sync-diff.json
 .ds-build-meta.json
+.ds-sync/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules

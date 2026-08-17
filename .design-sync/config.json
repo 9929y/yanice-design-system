@@ -1,0 +1,30 @@
+{
+  "projectId": "99d43371-f886-46f0-a213-8a55b58563fc",
+  "shape": "package",
+  "pkg": "yanice-design-system",
+  "globalName": "YaniceDS",
+  "buildCmd": "npm run build",
+  "cssEntry": "dist/yanice-ds.css",
+  "tokensGlob": "src/tokens.css",
+  "overrides": {
+    "GlassNav": {
+      "cardMode": "single",
+      "primaryStory": "DashboardActive"
+    },
+    "Text": {
+      "cardMode": "column"
+    },
+    "Card": {
+      "cardMode": "column"
+    },
+    "Bento": {
+      "cardMode": "column"
+    },
+    "BentoCell": {
+      "cardMode": "column"
+    },
+    "Root": {
+      "cardMode": "column"
+    }
+  }
+}

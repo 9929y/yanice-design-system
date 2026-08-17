@@ -66,6 +66,7 @@
   --ds-sp-xxl: 48px;
 
   --ds-gap: 12px;       /* between cells */
+  --ds-bento-row: 180px; /* base row height — what makes `h` spans mean anything */
   --ds-pad-card: 32px;  /* inside a cell — fewer, larger cells means each needs air */
 
   /* ── Motion ───────────────────────────────────────────────────

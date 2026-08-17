@@ -3,7 +3,7 @@ import type { ReactNode, CSSProperties } from 'react';
 export interface BentoProps {
   children?: ReactNode;
   /**
-   * Column count. Left as a prop on purpose: the Dashboard cell inventory is
+   * Column count. Omit to inherit from `Root columns`. Left as a prop on purpose:
    * still an open decision, and column count follows from it.
    */
   columns?: number;
@@ -18,11 +18,11 @@ export interface BentoProps {
  *
  * Leave slack around any `Card`: a tilted card overhangs its cell.
  */
-export function Bento({ children, columns = 4, className, style }: BentoProps) {
+export function Bento({ children, columns, className, style }: BentoProps) {
   return (
     <div
       className={['ds-bento', className].filter(Boolean).join(' ')}
-      style={{ ['--ds-bento-cols' as string]: columns, ...style }}
+      style={{ ...(columns ? { ['--ds-bento-cols' as string]: columns } : {}), ...style }}
     >
       {children}
     </div>
@@ -40,9 +40,13 @@ export interface BentoCellProps {
 }
 
 /**
- * One Dashboard cell. Combine with `Surface` for the Flat material:
+ * One Dashboard cell — pure grid placement, with **no padding of its own**.
+ * The padding that makes a cell feel airy belongs to the `Surface` inside it
+ * (32px by default). Put it on both and the visual gap between two surfaces
+ * becomes 76px instead of 12.
+ *
  * ```tsx
- * <BentoCell w={2}><Surface padding="none">…</Surface></BentoCell>
+ * <BentoCell w={2}><Surface>…</Surface></BentoCell>
  * ```
  */
 export function BentoCell({ children, w = 1, h = 1, className, style }: BentoCellProps) {

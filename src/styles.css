@@ -1,3 +1,8 @@
+/* Inter must travel with the stylesheet. Designs built with this system
+   receive only styles.css's transitive @import closure — if the font is
+   loaded by the host page instead, every design silently falls back to a
+   system font and nothing downstream catches it. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
 @import './tokens.css';
 
 /* ============================================================
@@ -127,7 +132,13 @@
    A tilted card overhangs its cell — grids must leave slack. */
 .ds-card-stage { perspective: 1200px; }
 
+/* `display: block` is load-bearing. With an `href` the Card renders as an `<a>`,
+   which is inline by default — and `aspect-ratio` and `width` do not apply to
+   inline elements, so the 1:1 box collapses to a sliver and there is almost
+   nothing left to click. Every preview that omitted `href` rendered a `<div>`
+   and looked fine, which is why this only surfaced on the real site. */
 .ds-card {
+  display: block;
   position: relative;
   aspect-ratio: 1 / 1;
   width: 100%;
@@ -201,13 +212,22 @@
 /* ── Bento ───────────────────────────────────────────────────
    Column count is intentionally a prop: the Dashboard cell inventory
    is still open, and column count follows from it. */
+/* grid-auto-rows is load-bearing: without a row height, `BentoCell h={2}` spans
+   two auto-sized rows that are only as tall as their content, so a 2x2 cell
+   silently collapses into a short wide one and the whole grid reads as a
+   two-column list instead of a bento. */
 .ds-bento {
   display: grid;
   gap: var(--ds-gap);
   grid-template-columns: repeat(var(--ds-bento-cols, 4), minmax(0, 1fr));
+  grid-auto-rows: minmax(var(--ds-bento-row, 180px), auto);
 }
+/* No padding here. The cell is pure grid placement; the padding that makes a
+   cell "airy inside" belongs to the Surface within it (32px by default).
+   Padding both double-pads and turns "tight outside, airy inside" into
+   "airy outside, airy inside" — the visual gap between two surfaces becomes
+   12 + 32 + 32 = 76px instead of 12. */
 .ds-bento__cell {
-  padding: var(--ds-pad-card);
   grid-column: span var(--ds-cell-w, 1);
   grid-row: span var(--ds-cell-h, 1);
   min-width: 0;
