@@ -4,7 +4,7 @@ import { Root, Card } from 'yanice-design-system';
 export const AtRest = () => (
   <Root>
     <div style={{ padding: 32, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
-      <Card title="AtlasNova" meta="Product · Agents" />
+      <Card title="Northwind" meta="Product · Agents" />
       <Card title="Lark Design" meta="1:1 Interviews" />
       <Card title="Opus Clip" meta="0→1 · 6M users" />
     </div>
@@ -43,7 +43,7 @@ export const TiltedOpen = () => (
 export const WithThumbnail = () => (
   <Root>
     <div style={{ padding: 32, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24 }}>
-      <Card title="AtlasNova" meta="Product · Agents · Shipped">
+      <Card title="Northwind" meta="Product · Agents · Shipped">
         <div
           style={{
             position: 'absolute',

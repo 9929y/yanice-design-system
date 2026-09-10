@@ -13,7 +13,7 @@ import {
 } from '../src';
 
 const PROJECTS = [
-  { title: 'AtlasNova', meta: 'Product · Agents · Shipped' },
+  { title: 'Northwind', meta: 'Product · Agents · Shipped' },
   { title: 'Lark Design', meta: '1:1 Interviews · Onboarding' },
   { title: 'Opus Clip', meta: '0→1 · 6M users' },
   { title: 'McKinsey Ecommerce', meta: 'Strategy · Commerce' },

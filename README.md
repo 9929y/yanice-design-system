@@ -81,11 +81,6 @@ Verified behavior to keep:
 - Flat layering should stay quiet: surface, page, and hairline contrast are intentionally subtle.
 - Card tilt should be visible but not theatrical.
 
-## Public story
+## Licence
 
-This repo is strongest as evidence of design-to-implementation judgment:
-
-- Product: a focused system for one portfolio, not a generic UI kit.
-- Design: constrained materials, typography, color, and interaction rules.
-- Implementation: tokens and components that can be built, imported, and verified.
-- QA: visual demos, accessibility constraints, and motion boundaries.
+MIT — see [LICENSE](LICENSE).

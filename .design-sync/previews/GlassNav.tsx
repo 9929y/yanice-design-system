@@ -6,7 +6,7 @@ const TABS = [
 ];
 
 const WORK = [
-  { name: 'AtlasNova', tint: '#0d7d74' },
+  { name: 'Northwind', tint: '#0d7d74' },
   { name: 'Lark Design', tint: '#1a1917' },
   { name: 'Opus Clip', tint: '#78716c' },
   { name: 'McKinsey', tint: '#0d9488' },

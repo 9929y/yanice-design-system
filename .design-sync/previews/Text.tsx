@@ -44,7 +44,7 @@ export const CaptionPattern = () => (
   <Root>
     <div style={{ padding: 32, display: 'grid', gap: 24, maxWidth: 520 }}>
       {[
-        ['AtlasNova', 'Product · Agents · Shipped'],
+        ['Northwind', 'Product · Agents · Shipped'],
         ['Opus Clip', '0→1 · 6M users'],
         ['McKinsey Ecommerce', 'Strategy · Commerce'],
       ].map(([title, meta]) => (
